@@ -10,7 +10,7 @@
 // List<PhotosModel> fetchedPhotos = [];
 
 //     await http.get(Uri.parse("https://premium-anime-mobile-wallpapers-illustrations.p.rapidapi.com/rapidHandler/random"), headers: {
-//       'X-RapidAPI-Key': '7b699d9949msh37c47cc6e674de0p12d44cjsnfe9be2a5a9f4',
+//       'X-RapidAPI-Key': 'apiKey',
 
 //     }).then((value) {
 //       Map<String, dynamic> json = jsonDecode(value.body);
