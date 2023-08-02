@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wallpaper_app_flutter/views/screens/category.dart';
 import 'package:wallpaper_app_flutter/views/screens/home.dart';
 
 void main() {

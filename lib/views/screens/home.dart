@@ -50,15 +50,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: CustomeAppBar(),
+          title: const CustomeAppBar(),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              SearchBarTab(),
-              Container(
+              const SearchBarTab(),
+              SizedBox(
                 height: 70,
                 width: MediaQuery.of(context).size.width,
                 child: ListView.builder(
@@ -66,19 +66,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemCount: 7,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
-                      return CategoryBlock();
+                      return const CategoryBlock();
                     }),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 10),
                 height: MediaQuery.of(context).size.height - 200,
                 child: GridView.builder(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemCount: wallpapers.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: 0.6,
                       crossAxisSpacing: 10,

@@ -41,7 +41,7 @@ class CategoryBlock extends StatelessWidget {
                 color: Colors.black.withOpacity(0.3),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Center(child: Text('Category', style: TextStyle(color: Colors.white,fontSize: 18, fontWeight: FontWeight.bold))),
+              child: const Center(child: Text('Category', style: TextStyle(color: Colors.white,fontSize: 18, fontWeight: FontWeight.bold))),
             ),
           ),
         ],

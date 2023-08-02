@@ -87,7 +87,7 @@ class WallpaperAPI {
   
 
   Future<List<AnimeWallpaper>> fetchRandomWallpapers({int count = 10}) async {
-    final response = await http.get(Uri.parse('$baseUrl'), headers: {
+    final response = await http.get(Uri.parse(baseUrl), headers: {
       'X-RapidAPI-Key': apiKey,
       'X-RapidAPI-Host': host,
     });

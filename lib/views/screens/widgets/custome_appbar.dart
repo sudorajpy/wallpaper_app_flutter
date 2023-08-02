@@ -16,7 +16,7 @@ class CustomeAppBar extends StatelessWidget {
               fontWeight: FontWeight.bold
             ),
           ),
-          TextSpan(
+          const TextSpan(
             text: 'App',
             style: TextStyle(
               color: Colors.amberAccent,
