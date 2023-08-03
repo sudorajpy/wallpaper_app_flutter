@@ -78,7 +78,7 @@ import '../model/photos_model.dart';
 
 class WallpaperAPI {
   static const String apiKey =
-      '7b699d9949msh37c47cc6e674de0p12d44cjsnfe9be2a5a9f4';
+      'api_key';
   static const String host =
       'premium-anime-mobile-wallpapers-illustrations.p.rapidapi.com';
   static const String baseUrl =
