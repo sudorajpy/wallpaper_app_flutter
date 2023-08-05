@@ -5,6 +5,12 @@ class SearchBarTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
+    List searchResult = [];
+
+
+
     return Container(
 
       margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -15,16 +21,10 @@ class SearchBarTab extends StatelessWidget {
           width: 2,
         ),
         borderRadius: BorderRadius.circular(32),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),],
+        
           color: Colors.white
       ),
-      child: const Row(
+      child: Row(
         children: [
           Expanded(
             child: TextField(
@@ -35,10 +35,16 @@ class SearchBarTab extends StatelessWidget {
                 focusColor: Colors.amber
                 
               ),
+              
 
             ),
           ),
-          Icon(Icons.search,color: Colors.black,)
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/search');
+            },
+           icon: Icon(Icons.search,color: Colors.black,)
+           )
         ],
       )
     );
