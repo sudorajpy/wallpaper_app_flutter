@@ -36,27 +36,52 @@ class DrawerWidget extends StatelessWidget {
               }
 
               final categories = <String>{};
+              final categoryImages = <String, String>{};
+
               snapshot.data!.docs.forEach((doc) {
-                categories.add(doc['category']);
+                final category = doc['category'] as String;
+                final imageUrl = doc['urls'][0] as String;
+
+                if (!categories.contains(category)) {
+                  categories.add(category);
+                  categoryImages[category] = imageUrl;
+                }
               });
 
               return Expanded(
-                child: ListView.builder(
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   itemCount: categories.length,
+                  separatorBuilder: (context, index) => SizedBox(height: 2), // Adjust the spacing as needed
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(categories.elementAt(index)),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CategoryScreen(
-                              category: categories.elementAt(index),
-                            ),
+                    final category = categories.elementAt(index);
+                    final imageUrl = categoryImages[category];
+
+                    return Card(
+                      child: ListTile(
+                        title: Text(category),
+                        leading: SizedBox(
+                          height: 50,
+                          width: 50,
+                          child: Image.network(
+                            imageUrl!,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
                           ),
-                          
-                        );
-                      },
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CategoryScreen(
+                                category: category,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     );
                   },
                 ),

@@ -15,10 +15,24 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: CustomeAppBar(
-      //   title: category,
-      //   showLeadingIcon: true,
-      // ),
+      appBar: AppBar(
+        title: Text(category),
+        centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       Navigator.pushNamed(context, '/search');
+        //     },
+        //     icon: const Icon(Icons.search),
+        //   ),
+        // ],
+      ),
       body: Container(
         height: MediaQuery.of(context).size.height - 50,
         child: SingleChildScrollView(
