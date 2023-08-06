@@ -28,6 +28,15 @@ class _SearchScreenState extends State<SearchScreen> {
         appBar: AppBar(
           title: const CustomeAppBar(),
           centerTitle: true,
+          actions: [
+            //back button
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back_ios),
+            ),
+          ],
         ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

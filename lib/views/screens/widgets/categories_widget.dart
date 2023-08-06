@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../category.dart';
+import '../full_screen.dart';
+
 class CategoriesWidget extends StatelessWidget {
   const CategoriesWidget({
     super.key,
@@ -23,7 +26,16 @@ class CategoriesWidget extends StatelessWidget {
               style: TextStyle(color: Colors.black, fontSize: 24),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CategoryScreen(
+                      category: category,
+                    ),
+                  ),
+                );
+              },
               child: const Text(
                 'View All',
                 style: TextStyle(color: Colors.blue, fontSize: 16),
@@ -41,15 +53,27 @@ class CategoriesWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: ListView.builder(
-            itemBuilder: (context, index) => Container(
-              margin: const EdgeInsets.only(right: 15),
-              height: 200,
-              width: 150,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  wallpapers[index]['urls'][0],
-                  fit: BoxFit.cover,
+            itemBuilder: (context, index) => InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return FullScreen(
+                      imgUrl: wallpapers[index]['urls'][0],
+                    );
+                  }),
+                );
+              },
+              child: Container(
+                margin: const EdgeInsets.only(right: 15),
+                height: 200,
+                width: 150,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    wallpapers[index]['urls'][0],
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

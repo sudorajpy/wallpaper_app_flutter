@@ -1,72 +1,92 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:wallpaper_app_flutter/views/screens/full_screen.dart';
 import 'package:wallpaper_app_flutter/views/screens/widgets/custome_appbar.dart';
 
+import '../../provider/favorites_provider.dart';
+
+
 class CategoryScreen extends StatelessWidget {
-  const CategoryScreen({super.key});
+  const CategoryScreen({Key? key, required this.category}) : super(key: key);
+
+  final String category;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const CustomeAppBar(),
-        centerTitle: true,
-      ),
+      // appBar: CustomeAppBar(
+      //   title: category,
+      //   showLeadingIcon: true,
+      // ),
       body: Container(
-        height: MediaQuery.of(context).size.height-150,
+        height: MediaQuery.of(context).size.height - 50,
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: BouncingScrollPhysics(),
           child: Column(
             children: [
-             
-              Stack(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 200,
-                    child: Image.network('https://images.pexels.com/photos/1335971/pexels-photo-1335971.jpeg?auto=compress&cs=tinysrgb&w=600',fit: BoxFit.cover,),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
-                      color: Colors.black.withOpacity(0.4),
-                      child: const Center(
-                        child: Text('category name',style: TextStyle(color: Colors.white,fontSize: 24,fontWeight: FontWeight.bold),),
-                      ),
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('wallpapers')
+                    .where('category', isEqualTo: category)
+                    .snapshots(),
+                builder:
+                    (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+
+                  final favoriteProvider = Provider.of<FavoriteProvider>(context);
+
+                  final wallpapers = <String, bool>{};
+                  snapshot.data!.docs.forEach((doc) {
+                    final imgUrl = doc['urls'][0] as String;
+                    final isLiked = favoriteProvider.favorites.contains(imgUrl);
+                    wallpapers[imgUrl] = isLiked;
+                  });
+
+                  return GridView.builder(
+                    physics: BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: wallpapers.length,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.6,
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                height: MediaQuery.of(context).size.height - 200,
-               
-                child: GridView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: 20,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
-                childAspectRatio: 0.6,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10
-                ), itemBuilder:(context,index)=>Container(
-                   decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network('https://images.pexels.com/photos/67826/jellyfish-luminous-jellyfish-light-light-phenomenon-67826.jpeg?auto=compress&cs=tinysrgb&w=600',fit: BoxFit.cover,),
-                ),
-                ),),
+                    itemBuilder: (context, index) {
+                      final imgUrl = wallpapers.keys.elementAt(index);
+                      final isLiked = wallpapers[imgUrl] ?? false;
+
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FullScreen(
+                                imgUrl: imgUrl,// Pass the liked state to FullScreen
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            image: DecorationImage(
+                              image: NetworkImage(imgUrl),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
               )
             ],
           ),
         ),
-      )
+      ),
     );
   }
 }

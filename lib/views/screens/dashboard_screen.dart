@@ -58,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   ];
 
   List<Widget> _pages = [
-    FavrouitsScreen(),
+    FavoriteScreen(),
     HomeScreen(),
     SettingsScreen(),
   ];
