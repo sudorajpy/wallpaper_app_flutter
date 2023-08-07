@@ -13,7 +13,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => FavoriteProvider()),
-        // ChangeNotifierProvider(create: (context) => CategoriesProvider()),
+        
       ],
       child: const MyApp(),
     ),

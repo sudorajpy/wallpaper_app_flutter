@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:wallpaper_app_flutter/views/screens/full_screen.dart';
 import 'package:wallpaper_app_flutter/views/screens/widgets/custome_appbar.dart';
 import 'package:wallpaper_app_flutter/views/screens/widgets/search_bar.dart';
 
@@ -73,15 +74,25 @@ class _SearchScreenState extends State<SearchScreen> {
                       childAspectRatio: 0.6,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10),
-                  itemBuilder: (context, index) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Image.network(
-                        searchResult[index]['urls'][0],
-                        fit: BoxFit.cover,
+                  itemBuilder: (context, index) => InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FullScreen(
+                                    imgUrl: searchResult[index]['urls'][0],
+                                  )));
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image.network(
+                          searchResult[index]['urls'][0],
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),

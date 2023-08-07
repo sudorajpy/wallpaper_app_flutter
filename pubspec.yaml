@@ -43,6 +43,9 @@ dependencies:
   like_button: ^2.0.5
   google_nav_bar: ^5.0.6
   provider: ^6.0.5
+  flutter_cache_manager: ^3.3.1
+  flutter_wallpaper_manager: ^0.0.4
+  url_launcher: ^6.1.12
 
 dev_dependencies:
   flutter_test:

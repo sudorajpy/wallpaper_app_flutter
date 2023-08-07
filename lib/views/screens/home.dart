@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wallpaper_app_flutter/views/screens/widgets/categories_widget.dart';
+import 'package:wallpaper_app_flutter/views/screens/full_screen.dart';
 import 'package:wallpaper_app_flutter/views/screens/widgets/drawer_widget.dart';
 import 'package:wallpaper_app_flutter/views/screens/widgets/search_bar.dart';
 
-import '../../services/firebase_services.dart';
+import 'category.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,41 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
-
-
-
-
-
-  // State variables to store the fetched data
-  List<DocumentSnapshot>  onePieceWallpapers = [];
-  List<DocumentSnapshot> cat1Wallpapers = [];
-  List<DocumentSnapshot> cat2Wallpapers = [];
-
-  // Function to fetch data from Firestore and store it in state variables
-  Future<void> fetchData() async {
-    final snapshot =
-        await FirebaseFirestore.instance.collection('wallpapers').get();
-
-    final data = snapshot.docs;
-
-    // Filter wallpapers for each category and store in state variables
-    setState(() {
-      onePieceWallpapers =
-          data.where((doc) => doc['category'] == 'one piece').toList();
-      cat1Wallpapers = data.where((doc) => doc['category'] == 'cat1').toList();
-      cat2Wallpapers = data.where((doc) => doc['category'] == 'cat2').toList();
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // Call fetchData() when the app is first initialized
-    fetchData();
-  }
-
   // Function to open the drawer
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -59,8 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       key: _scaffoldKey,
       drawer: DrawerWidget(),
@@ -136,24 +99,117 @@ class _HomeScreenState extends State<HomeScreen> {
                     topRight: Radius.circular(40),
                   ),
                 ),
-                child: Column(
-                  children: [
-                    CategoriesWidget(
-                      category: 'One Piece',
-                      wallpapers: onePieceWallpapers,
-                    ),
-                    SizedBox(height: 20),
-                    CategoriesWidget(
-                      category: 'cat1',
-                      wallpapers: cat1Wallpapers,
-                    ),
-                    SizedBox(height: 20),
-                    CategoriesWidget(
-                      category: 'cat2',
-                      wallpapers: cat2Wallpapers,
-                    ),
-                  ],
-                ),
+                child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('wallpapers')
+                        .snapshots(),
+                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+
+                      // Create a list of all categories and shuffle them randomly.
+                      List<String> allCategories = [];
+                      snapshot.data!.docs.forEach((doc) {
+                        final category = doc['category'] as String;
+                        allCategories.add(category);
+                      });
+                      allCategories =
+                          allCategories.toSet().toList(); // Remove duplicates
+                      allCategories.shuffle();
+
+                      // Pick the first three categories from the shuffled list.
+                      final selectedCategories = allCategories.take(3).toList();
+
+                      return ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: selectedCategories.length,
+                        itemBuilder: (context, index) {
+                          final category = selectedCategories[index];
+                          final categoryImages = <String>[];
+
+                          snapshot.data!.docs.forEach((doc) {
+                            final docCategory = doc['category'] as String;
+                            final imageUrl = doc['urls'][0] as String;
+                            if (docCategory == category) {
+                              categoryImages.add(imageUrl);
+                            }
+                          });
+                          return Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Popular in $category',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 24),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => CategoryScreen(
+                                            category: category,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text(
+                                      'View All',
+                                      style: TextStyle(
+                                          color: Colors.blue, fontSize: 16),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                height: 200,
+                                width: MediaQuery.of(context).size.width,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                FullScreen(
+                                                  imgUrl: categoryImages[index] ,
+                                              
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: 10),
+                                        width: 150,
+                                        height: 200,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(20),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                categoryImages[index]),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  itemCount: categoryImages.length >= 5
+                                      ? 5
+                                      : categoryImages.length,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }),
               ),
             ],
           ),

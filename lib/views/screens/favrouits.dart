@@ -16,7 +16,8 @@ class FavoriteScreen extends StatelessWidget {
       ),
       body: Container(
         height: MediaQuery.of(context).size.height-50,
-        child: GridView.builder(
+        child: favoriteProvider.favorites.length == 0 ? Center(child: Text('No Favorites Yet!\nplease add to view', style: TextStyle(color: Colors.black, fontSize: 22),),) :
+        GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 8,
@@ -38,6 +39,8 @@ class FavoriteScreen extends StatelessWidget {
                       },
                        child: Container(
                          margin: const EdgeInsets.all(8),
+                         height: 400,
+                          width: 200,
                          decoration: BoxDecoration(
                            borderRadius: BorderRadius.circular(15),
                            image: DecorationImage(
@@ -45,6 +48,7 @@ class FavoriteScreen extends StatelessWidget {
                              fit: BoxFit.cover,
                            ),
                          ),
+                      
                        ),
                      );
           },
