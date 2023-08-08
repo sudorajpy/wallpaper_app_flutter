@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wallpaper_app_flutter/views/screens/full_screen.dart';
+import 'package:wallpaper_app_flutter/views/screens/search.dart';
 import 'package:wallpaper_app_flutter/views/screens/widgets/drawer_widget.dart';
 import 'package:wallpaper_app_flutter/views/screens/widgets/search_bar.dart';
 
@@ -15,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController searchController = TextEditingController();
   // Function to open the drawer
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -84,14 +86,46 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 20,
               ),
-              const SearchBarTab(),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SearchScreen(),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 150,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        CupertinoIcons.search,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Search here...',
+                        style: TextStyle(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               const SizedBox(
                 height: 20,
               ),
               Container(
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height - 60,
-                padding: const EdgeInsets.only(top: 20, left: 20),
+                height: MediaQuery.of(context).size.height,
+                padding: const EdgeInsets.only( left: 20),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -122,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       final selectedCategories = allCategories.take(3).toList();
 
                       return ListView.builder(
-                        physics: const BouncingScrollPhysics(),
+                        physics: NeverScrollableScrollPhysics(),
                         itemCount: selectedCategories.length,
                         itemBuilder: (context, index) {
                           final category = selectedCategories[index];
@@ -137,6 +171,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                           return Column(
                             children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
@@ -177,10 +214,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) =>
-                                                FullScreen(
-                                                  imgUrl: categoryImages[index] ,
-                                              
+                                            builder: (context) => FullScreen(
+                                              imgUrl: categoryImages[index],
                                             ),
                                           ),
                                         );
@@ -190,7 +225,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         width: 150,
                                         height: 200,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                           image: DecorationImage(
                                             image: NetworkImage(
                                                 categoryImages[index]),

@@ -13,6 +13,7 @@ class FavoriteScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Favorite Wallpapers'),
+        centerTitle: true,
       ),
       body: Container(
         height: MediaQuery.of(context).size.height-50,

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class SearchBarTab extends StatelessWidget {
-  const SearchBarTab({super.key});
+  const SearchBarTab({super.key, required this.searchController, required this.onSubmitted});
+  final TextEditingController searchController;
+  final Function onSubmitted;
 
   @override
   Widget build(BuildContext context) {
 
 
-    List searchResult = [];
+   
 
 
 
@@ -28,9 +30,11 @@ class SearchBarTab extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
+              onSubmitted: onSubmitted(),
+              controller: searchController,
               decoration: InputDecoration(
-                hintText: 'Search',
-                // prefixIcon: Icon(Icons.search),
+                hintText: 'Search here...',
+                prefixIcon: Icon(Icons.search),
                 border: InputBorder.none,
                 focusColor: Colors.amber
                 

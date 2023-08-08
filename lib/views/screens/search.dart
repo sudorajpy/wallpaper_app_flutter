@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wallpaper_app_flutter/views/screens/full_screen.dart';
 import 'package:wallpaper_app_flutter/views/screens/widgets/custome_appbar.dart';
@@ -6,6 +7,7 @@ import 'package:wallpaper_app_flutter/views/screens/widgets/search_bar.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+  
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -13,7 +15,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   List searchResult = [];
-  void searchFromFirebase(String query) async {
+  void searchFromFirebase(query) async {
     final result = await FirebaseFirestore.instance
         .collection('wallpapers')
         .where('tags', arrayContains: query)
@@ -27,17 +29,8 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const CustomeAppBar(),
+          title: const Text('Search'),
           centerTitle: true,
-          actions: [
-            //back button
-            IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back_ios),
-            ),
-          ],
         ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -45,19 +38,12 @@ class _SearchScreenState extends State<SearchScreen> {
             children: [
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 10),
-                child: TextField(
-                  onSubmitted: (value) {
+                child: SearchBar(
+                  hintText: 'Search Wallpaper',
+                  leading: const Icon(CupertinoIcons.search),
+                  onChanged: (value) {
                     searchFromFirebase(value);
                   },
-                  decoration: InputDecoration(
-                      hintText: 'Search',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.search),
-                      )),
-                
                 )
               ),
               const SizedBox(
