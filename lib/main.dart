@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:wallpaper_app_flutter/provider/favorites_provider.dart';
 import 'package:wallpaper_app_flutter/views/screens/dashboard_screen.dart';
 import 'package:wallpaper_app_flutter/views/screens/home.dart';
-import 'package:wallpaper_app_flutter/views/screens/search.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -22,21 +24,22 @@ class FullScreen extends StatefulWidget {
 }
 
 class _FullScreenState extends State<FullScreen> {
+  bool isloading = false;
+
   Future<void> setWallpaper(String url) async {
     try {
-      int location = WallpaperManager
-          .HOME_SCREEN; 
+    
+      int location = WallpaperManager.HOME_SCREEN;
       var file = await DefaultCacheManager().getSingleFile(url);
       final bool result =
           await WallpaperManager.setWallpaperFromFile(file.path, location);
-      print(result);
-      
+    // if (result==true) {
+    //   SnackBar(content: Text("Wallpaper set successfully"));
+    // }
     } on PlatformException {
       print("$PlatformException");
     }
   }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -125,8 +128,24 @@ class _FullScreenState extends State<FullScreen> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {
-                        setWallpaper(widget.imgUrl);
+                      onTap: () async {
+                        setState(() {
+                          isloading = true;
+                        });
+                        await setWallpaper(widget.imgUrl);
+                        setState(() {
+                          isloading = false;
+
+                        });
+                              // Show the snackbar with glass effect
+      Fluttertoast.showToast(
+        msg: 'Wallpaper applied successfully',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.white.withOpacity(0.8), // Glass effect color
+        textColor: Colors.black,
+      );
+
                       },
                       child: Container(
                           height: 40,
@@ -136,24 +155,36 @@ class _FullScreenState extends State<FullScreen> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Center(
-                            child: Text(
-                              "Apply",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 20),
-                            ),
+                            child: isloading
+                                ? Container(
+                                  width: 40,
+                                  child: CircularProgressIndicator(
+                                    
+                                  ),
+                                )
+                                : Text(
+                                  "Apply",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 20),
+                                ),
                           )),
                     ),
-                    Container(
-                        height: 40,
-                        width: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Icon(
-                          CupertinoIcons.share,
-                          size: 28,
-                        )),
+                    InkWell(
+                      onTap: () {
+                        Share.share(widget.imgUrl);
+                      },
+                      child: Container(
+                          height: 40,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Icon(
+                            CupertinoIcons.share,
+                            size: 28,
+                          )),
+                    ),
                   ],
                 ),
               ),

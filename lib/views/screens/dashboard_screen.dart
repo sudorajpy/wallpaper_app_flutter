@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:wallpaper_app_flutter/views/screens/category.dart';
 import 'package:wallpaper_app_flutter/views/screens/favrouits.dart';
 import 'package:wallpaper_app_flutter/views/screens/home.dart';
 import 'package:wallpaper_app_flutter/views/screens/settings.dart';
