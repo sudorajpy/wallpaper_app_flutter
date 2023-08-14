@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:wallpaper_app_flutter/views/screens/full_screen.dart';
 import 'package:wallpaper_app_flutter/views/screens/search.dart';
 import 'package:wallpaper_app_flutter/views/screens/widgets/drawer_widget.dart';
-import 'package:wallpaper_app_flutter/views/screens/widgets/search_bar.dart';
 
 import 'category.dart';
 
@@ -28,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: DrawerWidget(),
+      drawer: const DrawerWidget(),
       body: Container(
         height: MediaQuery.of(context).size.height - 50,
         width: MediaQuery.of(context).size.width,
@@ -71,9 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 60,
               ),
-              Container(
+              const SizedBox(
                 width: double.infinity,
-                child: const Text(
+                child: Text(
                   'Looking for high quality \n free wallpapers',
                   style: TextStyle(
                     color: Colors.white,
@@ -102,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
@@ -139,15 +138,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         .snapshots(),
                     builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (!snapshot.hasData) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       }
 
                       // Create a list of all categories and shuffle them randomly.
                       List<String> allCategories = [];
-                      snapshot.data!.docs.forEach((doc) {
+                      for (var doc in snapshot.data!.docs) {
                         final category = doc['category'] as String;
                         allCategories.add(category);
-                      });
+                      }
                       allCategories =
                           allCategories.toSet().toList(); // Remove duplicates
                       allCategories.shuffle();
@@ -156,19 +155,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       final selectedCategories = allCategories.take(3).toList();
 
                       return ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: selectedCategories.length,
                         itemBuilder: (context, index) {
                           final category = selectedCategories[index];
                           final categoryImages = <String>[];
 
-                          snapshot.data!.docs.forEach((doc) {
+                          for (var doc in snapshot.data!.docs) {
                             final docCategory = doc['category'] as String;
                             final imageUrl = doc['urls'][0] as String;
                             if (docCategory == category) {
                               categoryImages.add(imageUrl);
                             }
-                          });
+                          }
                           return Column(
                             children: [
                               const SizedBox(
@@ -181,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Text(
                                     'Popular in $category',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.black, fontSize: 24),
                                   ),
                                   TextButton(
@@ -203,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ],
                               ),
-                              Container(
+                              SizedBox(
                                 height: 200,
                                 width: MediaQuery.of(context).size.width,
                                 child: ListView.builder(
@@ -221,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         );
                                       },
                                       child: Container(
-                                        margin: EdgeInsets.only(left: 10),
+                                        margin: const EdgeInsets.only(left: 10),
                                         width: 150,
                                         height: 200,
                                         decoration: BoxDecoration(

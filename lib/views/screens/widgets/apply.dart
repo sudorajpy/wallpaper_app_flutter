@@ -5,7 +5,7 @@ void _showApplyOptionsDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Apply Wallpaper To:'),
+        title: const Text('Apply Wallpaper To:'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -15,7 +15,7 @@ void _showApplyOptionsDialog(BuildContext context) {
                 Navigator.pop(context); // Close the dialog
                 // _applyWallpaperToHomeScreen();
               },
-              child: Text('Home Screen'),
+              child: const Text('Home Screen'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -23,7 +23,7 @@ void _showApplyOptionsDialog(BuildContext context) {
                 Navigator.pop(context); // Close the dialog
                 // _applyWallpaperToLockScreen();
               },
-              child: Text('Lock Screen'),
+              child: const Text('Lock Screen'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -31,7 +31,7 @@ void _showApplyOptionsDialog(BuildContext context) {
                 Navigator.pop(context); // Close the dialog
                 // _applyWallpaperToBoth();
               },
-              child: Text('Both'),
+              child: const Text('Both'),
             ),
           ],
         ),

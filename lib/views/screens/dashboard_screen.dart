@@ -19,8 +19,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomAppBar(
         height: 50,
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        shape: CircularNotchedRectangle(),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        shape: const CircularNotchedRectangle(),
         elevation: 0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,16 +49,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  List<IconData> _icon = [
+  final List<IconData> _icon = [
     CupertinoIcons.heart,
     CupertinoIcons.collections,
     CupertinoIcons.slider_horizontal_3
   ];
 
-  List<Widget> _pages = [
-    FavoriteScreen(),
-    HomeScreen(),
-    SettingsScreen(),
+  final List<Widget> _pages = [
+    const FavoriteScreen(),
+    const HomeScreen(),
+    const SettingsScreen(),
   ];
 }
 

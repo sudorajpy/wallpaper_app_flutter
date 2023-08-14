@@ -14,25 +14,25 @@ class DrawerWidget extends StatelessWidget {
       color: Colors.white,
       child: Column(
         children: [
-          SizedBox(height: 50),
-          Text('Categories', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 50),
+          const Text('Categories', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           // StreamBuilder to display categories
           Column(
             children: [
               SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
     
                 child: StreamBuilder(
                   stream: FirebaseFirestore.instance.collection('wallpapers').snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     }
                         
                     final categories = <String>{};
                     final categoryImages = <String, String>{};
                         
-                    snapshot.data!.docs.forEach((doc) {
+                    for (var doc in snapshot.data!.docs) {
                       final category = doc['category'] as String;
                       final imageUrl = doc['urls'][0] as String;
                         
@@ -40,7 +40,7 @@ class DrawerWidget extends StatelessWidget {
                         categories.add(category);
                         categoryImages[category] = imageUrl;
                       }
-                    });
+                    }
                         
                     return Expanded(
                       child: ListView.builder(

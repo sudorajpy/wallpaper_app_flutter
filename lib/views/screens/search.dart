@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wallpaper_app_flutter/views/screens/full_screen.dart';
-import 'package:wallpaper_app_flutter/views/screens/widgets/custome_appbar.dart';
-import 'package:wallpaper_app_flutter/views/screens/widgets/search_bar.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

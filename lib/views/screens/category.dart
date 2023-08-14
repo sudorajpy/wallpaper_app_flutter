@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:wallpaper_app_flutter/views/screens/full_screen.dart';
-import 'package:wallpaper_app_flutter/views/screens/widgets/custome_appbar.dart';
 
 import '../../provider/favorites_provider.dart';
 
@@ -33,10 +32,10 @@ class CategoryScreen extends StatelessWidget {
         //   ),
         // ],
       ),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height - 50,
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               StreamBuilder(
@@ -47,20 +46,20 @@ class CategoryScreen extends StatelessWidget {
                 builder:
                     (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
                   if (!snapshot.hasData) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
 
                   final favoriteProvider = Provider.of<FavoriteProvider>(context);
 
                   final wallpapers = <String, bool>{};
-                  snapshot.data!.docs.forEach((doc) {
+                  for (var doc in snapshot.data!.docs) {
                     final imgUrl = doc['urls'][0] as String;
                     final isLiked = favoriteProvider.favorites.contains(imgUrl);
                     wallpapers[imgUrl] = isLiked;
-                  });
+                  }
 
                   return GridView.builder(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: wallpapers.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

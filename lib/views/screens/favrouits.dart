@@ -6,20 +6,22 @@ import 'full_screen.dart';
 
 
 class FavoriteScreen extends StatelessWidget {
+  const FavoriteScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final favoriteProvider = Provider.of<FavoriteProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Favorite Wallpapers'),
+        title: const Text('Favorite Wallpapers'),
         centerTitle: true,
       ),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height-50,
-        child: favoriteProvider.favorites.length == 0 ? Center(child: Text('No Favorites Yet!\nplease add to view', style: TextStyle(color: Colors.black, fontSize: 22),),) :
+        child: favoriteProvider.favorites.isEmpty ? const Center(child: Text('No Favorites Yet!\nplease add to view', style: TextStyle(color: Colors.black, fontSize: 22),),) :
         GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 8,
             mainAxisSpacing: 8,

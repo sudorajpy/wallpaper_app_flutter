@@ -75,7 +75,6 @@ import 'package:flutter/material.dart';
 // }
 
 
-import 'dart:math';
 
 import 'package:wallpaper_app_flutter/views/screens/category.dart';
 
@@ -88,24 +87,24 @@ class TempScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Temp'),
+        title: const Text('Temp'),
       ),
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('wallpapers').snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
 
             // Create a list of all categories and shuffle them randomly.
             List<String> allCategories = [];
-            snapshot.data!.docs.forEach((doc) {
+            for (var doc in snapshot.data!.docs) {
               final category = doc['category'] as String;
               allCategories.add(category);
-            });
+            }
             allCategories = allCategories.toSet().toList(); // Remove duplicates
             allCategories.shuffle();
 
@@ -118,13 +117,13 @@ class TempScreen extends StatelessWidget {
                 final category = selectedCategories[index];
                 final categoryImages = <String>[];
 
-                snapshot.data!.docs.forEach((doc) {
+                for (var doc in snapshot.data!.docs) {
                   final docCategory = doc['category'] as String;
                   final imageUrl = doc['urls'][0] as String;
                   if (docCategory == category) {
                     categoryImages.add(imageUrl);
                   }
-                });
+                }
 
                 return Column(
                   children: [
@@ -134,7 +133,7 @@ class TempScreen extends StatelessWidget {
           children: [
             Text(
               'Popular in $category',
-              style: TextStyle(color: Colors.black, fontSize: 24),
+              style: const TextStyle(color: Colors.black, fontSize: 24),
             ),
             TextButton(
               onPressed: () {
@@ -154,7 +153,7 @@ class TempScreen extends StatelessWidget {
             ),
           ],
         ),
-                    Container(
+                    SizedBox(
                       height: 200,
                       
                       width: MediaQuery.of(context).size.width,
@@ -162,7 +161,7 @@ class TempScreen extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return Container(
-                            margin: EdgeInsets.only(left: 10),
+                            margin: const EdgeInsets.only(left: 10),
                             width: 150,
                             height: 200,
                             decoration: BoxDecoration(

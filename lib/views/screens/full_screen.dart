@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../provider/favorites_provider.dart';
 
@@ -68,7 +64,7 @@ class _FullScreenState extends State<FullScreen> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.arrow_back_outlined,
                           color: Colors.black,
                           size: 30,
@@ -77,7 +73,7 @@ class _FullScreenState extends State<FullScreen> {
             ),
             Positioned(
               bottom: 60,
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -115,12 +111,12 @@ class _FullScreenState extends State<FullScreen> {
                                     listen: false)
                                 .favorites
                                 .contains(widget.imgUrl)
-                            ? Icon(
+                            ? const Icon(
                                 CupertinoIcons.heart_fill,
                                 size: 28,
                                 color: Colors.red,
                               )
-                            : Icon(
+                            : const Icon(
                                 CupertinoIcons.heart,
                                 size: 28,
                                 color: Colors.black,
@@ -156,13 +152,13 @@ class _FullScreenState extends State<FullScreen> {
                           ),
                           child: Center(
                             child: isloading
-                                ? Container(
+                                ? const SizedBox(
                                   width: 40,
                                   child: CircularProgressIndicator(
                                     
                                   ),
                                 )
-                                : Text(
+                                : const Text(
                                   "Apply",
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 20),
@@ -180,7 +176,7 @@ class _FullScreenState extends State<FullScreen> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          child: Icon(
+                          child: const Icon(
                             CupertinoIcons.share,
                             size: 28,
                           )),

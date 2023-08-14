@@ -32,7 +32,7 @@ class SearchBarTab extends StatelessWidget {
             child: TextField(
               onSubmitted: onSubmitted(),
               controller: searchController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search here...',
                 prefixIcon: Icon(Icons.search),
                 border: InputBorder.none,
@@ -47,7 +47,7 @@ class SearchBarTab extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(context, '/search');
             },
-           icon: Icon(Icons.search,color: Colors.black,)
+           icon: const Icon(Icons.search,color: Colors.black,)
            )
         ],
       )

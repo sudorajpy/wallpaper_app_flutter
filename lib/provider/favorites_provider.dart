@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 // Step 2: Create a FavoriteProvider class to manage the list of favorites
 class FavoriteProvider with ChangeNotifier {
-  List<String> _favorites = [];
+  final List<String> _favorites = [];
 
   List<String> get favorites => _favorites;
 

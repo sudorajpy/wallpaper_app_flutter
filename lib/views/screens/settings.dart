@@ -10,7 +10,7 @@ class SettingsScreen extends StatelessWidget {
         title: const Text('Settings'),
         centerTitle: true,
       ),
-      body: Container(
+      body: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height-60,
         child: Column(
@@ -19,7 +19,7 @@ class SettingsScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: 200,
               color: Colors.green,
-              child: Center(
+              child: const Center(
                 child: Text(
                   'Subsctiption and login will be added soon',
                   style: TextStyle(
@@ -33,8 +33,8 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
 
-            ListTile(
-              title: const Text(
+            const ListTile(
+              title: Text(
                 'Support',
                 style: TextStyle(
                   fontSize: 18,
@@ -45,14 +45,14 @@ class SettingsScreen extends StatelessWidget {
                 Icons.help_outline,
                 size: 24,
               ),
-              trailing: const Icon(
+              trailing: Icon(
                 Icons.arrow_forward_ios,
                 size: 18,
               ),
             
             ),
-            ListTile(
-              title: const Text(
+            const ListTile(
+              title: Text(
                 'Rate App',
                 style: TextStyle(
                   fontSize: 18,
@@ -63,15 +63,15 @@ class SettingsScreen extends StatelessWidget {
                 Icons.star_border,
                 size: 24,
               ),
-              trailing: const Icon(
+              trailing: Icon(
                 Icons.arrow_forward_ios,
                 size: 18,
               ),
             
             
             ),
-            ListTile(
-              title: const Text(
+            const ListTile(
+              title: Text(
                 'Share App',
                 style: TextStyle(
                   fontSize: 18,
@@ -82,15 +82,15 @@ class SettingsScreen extends StatelessWidget {
                 Icons.share,
                 size: 24,
               ),
-              trailing: const Icon(
+              trailing: Icon(
                 Icons.arrow_forward_ios,
                 size: 18,
               ),
             
             
             ),
-            ListTile(
-              title: const Text(
+            const ListTile(
+              title: Text(
                 'Terms and Conditions',
                 style: TextStyle(
                   fontSize: 18,
@@ -101,15 +101,15 @@ class SettingsScreen extends StatelessWidget {
                 Icons.description_outlined,
                 size: 24,
               ),
-              trailing: const Icon(
+              trailing: Icon(
                 Icons.arrow_forward_ios,
                 size: 18,
               ),
             
             
             ),
-            ListTile(
-              title: const Text(
+            const ListTile(
+              title: Text(
                 'Privacy Policy',
                 style: TextStyle(
                   fontSize: 18,
@@ -120,7 +120,7 @@ class SettingsScreen extends StatelessWidget {
                 Icons.privacy_tip_outlined,
                 size: 24,
               ),
-              trailing: const Icon(
+              trailing: Icon(
                 Icons.arrow_forward_ios,
                 size: 18,
               ),
