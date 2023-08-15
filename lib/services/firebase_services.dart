@@ -22,9 +22,7 @@ class FirebaseService {
       // Assuming tags and names are in the Firestore document structure
       tags = snapshot.docs.map((doc) => doc['tags'][0].toString()).toList();
       names = snapshot.docs.map((doc) => doc['name'].toString()).toList();
-      print(urls);
-      print(names);
-      print(tags);
+     
     } catch (e) {
       print('Error loading data: $e');
     }

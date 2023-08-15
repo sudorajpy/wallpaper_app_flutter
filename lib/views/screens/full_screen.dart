@@ -29,11 +29,8 @@ class _FullScreenState extends State<FullScreen> {
       var file = await DefaultCacheManager().getSingleFile(url);
       final bool result =
           await WallpaperManager.setWallpaperFromFile(file.path, location);
-    // if (result==true) {
-    //   SnackBar(content: Text("Wallpaper set successfully"));
-    // }
     } on PlatformException {
-      print("$PlatformException");
+      
     }
   }
 
